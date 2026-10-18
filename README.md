@@ -17,9 +17,8 @@
 
 ---
 
-## 💡 Ringkasan Cepat (TL;DR untuk Bahan Presentasi / Tanya Jawab)
+## 💡 Ringkasan Cepat
 
-Jika dosen meminta ringkasan singkat dalam 1 menit:
 1. **Bagian A (Linear Regression):** Kita memprediksi omzet penjualan berdasarkan biaya iklan bulanan. Didapat rumus $\hat{y} = 27.56 + 9.18X$. Artinya, tanpa pasang iklan pun penjualan dasar toko ada di angka **27,56 juta Rp**, dan setiap tambahan modal iklan **1 juta Rp** mendatangkan tambahan penjualan rata-rata **9,18 juta Rp** (ROI sangat sehat). Model ini sangat akurat dengan **$R^2 = 92.46\%$** pada data uji.
 2. **Bagian B (Logistic Regression):** Kita mendeteksi email spam dari jumlah link dan kata promo. Model menghasilkan akurasi **73.33%** dengan **Presisi 100%** pada threshold 0.5. Artinya, **tidak ada satu pun email penting/asli yang salah masuk ke folder spam** (*zero false positive*).
 3. **Validasi Scikit-Learn:** Model Linear Regression buatan sendiri menghasilkan angka yang **100% identik hingga 6 desimal** dengan `sklearn.linear_model.LinearRegression`.
@@ -151,36 +150,6 @@ Menguji 4 sampel email baru dengan threshold 0.5:
 | **E2** | 5 | 6 | **0.2109 (21.09%)** | 🟢 **Bukan Spam** | Ada beberapa link & promo, tapi belum menembus ambang batas 50%. |
 | **E3** | 9 | 10 | **0.9989 (99.89%)** | 🔴 **Spam** | Link bertaburan dan penuh kata rayuan promo. Hampir pasti 100% spam. |
 | **E4** | 2 | 11 | **0.6844 (68.44%)** | 🔴 **Spam** | Meski link sedikit, indikasi kata promonya sangat mencolok (11 kata), melewati ambang 50%. |
-
----
-
-## 🧠 Bagian C: Cheat Sheet 5 Konsep Machine Learning
-
-Bagian ini dirancang agar mudah dijelaskan secara lisan saat ditanya dosen:
-
-#### 1. Kenapa namanya *Logistic Regression* padahal fungsinya untuk *Klasifikasi*?
-> **Inti Jawaban:**  
-> Karena di balik layarnya, ia sebenarnya masih melakukan perhitungan **regresi linear** terhadap nilai *log-odds* ($z = b + \sum m_i x_i$). Hanya saja, angka linear yang bisa minus atau plus tak terhingga tersebut tidak langsung dipakai sebagai output, melainkan **diumpan ke fungsi Sigmoid** ($\sigma(z) = \frac{1}{1 + e^{-z}}$). Fungsi sigmoid memampatkan (*squeeze*) nilai apa pun menjadi skala probabilitas antara **0 sampai 1**. Karena output akhirnya berupa probabilitas untuk menentukan kelas label (0 atau 1), maka tugasnya adalah klasifikasi.
-
-#### 2. Apa beda *Normal Equation* vs *Gradient Descent*, dan kapan harus pakai Gradient Descent?
-> **Inti Jawaban:**  
-> - **Normal Equation:** Cara instan sekali hitung menggunakan rumus matriks invers $\boldsymbol{\beta} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$. Tidak perlu repot atur learning rate atau tunggu iterasi, tapi boros memori dan lambat jika fiturnya banyak karena operasi invers matriks berskala $\mathcal{O}(d^3)$.
-> - **Gradient Descent:** Cara bertahap (iteratif) menuruni lereng bukit error sampai menemukan titik terendah.
-> - **Kapan pakai Gradient Descent?** Ketika data berukuran besar (ratusan ribu hingga jutaan baris/fitur) di mana RAM komputer tidak sanggup lagi membalik matriks, atau ketika matriks fitur tidak bisa diinvers (*singular matrix*).
-
-#### 3. Kenapa wajib evaluasi di *Data Testing*? Apa itu *Overfitting*?
-> **Inti Jawaban:**  
-> - Mesin belajar bertujuan agar bisa pintar di dunia nyata (**kemampuan generalisasi**), bukan sekadar jago di soal latihan. Menguji di data training sama saja seperti memberi siswa ujian dengan soal yang kunci jawabannya sudah dihafal sebelumnya.
-> - **Overfitting** adalah kondisi di mana model "terlalu hafal" data latihan sampai kebisingan (*noise*) ikut dipelajari. Akibatnya, nilainya sempurna di data training, tapi saat diberi data baru (data testing) hasilnya hancur.
-
-#### 4. Kenapa Linear Regression pakai MSE, sedangkan Logistic Regression pakai Log Loss?
-> **Inti Jawaban:**  
-> - **Linear Regression** menebak angka kontinu. Selisih tebakan dengan target diasumsikan mengikuti kurva lonceng normal (Gaussian), sehingga rumus paling cocok secara matematis adalah kuadrat selisih (**MSE**). Kurva MSE pada regresi linear berbentuk mangkok cembung (*convex*), jadi mudah dicari titik dasarnya.
-> - **Logistic Regression** menebak probabilitas kejadian biner (distribusi Bernoulli). Jika kita memaksakan rumus MSE pada fungsi sigmoid yang berbelok-belok, kurva errornya akan bergelombang (*non-convex*) dan penuh jebakan lokal (*local minima*). Oleh karena itu, digunakan **Log Loss (Cross-Entropy)** yang menjamin kurva tetap cembung (*convex*) dan memberikan hukuman penalti sangat telak jika model overpede menebak salah.
-
-#### 5. Kenapa hasil angka tiap mahasiswa bisa berbeda meski dataset dan rumusnya sama?
-> **Inti Jawaban:**  
-> Karena ada parameter **`random_state` yang disetel sesuai 2 digit terakhir NIM masing-masing**. Nilai acak ini menentukan baris data mana saja yang terpilih masuk ke kantong *training* dan kantong *testing* saat fungsi `train_test_split` dijalankan. Karena data latihan yang disuapkan ke algoritma tiap mahasiswa sedikit berlainan, titik keseimbangan parameter akhir ($b$ dan $m$) otomatis akan menghasilkan angka yang unik.
 
 ---
 
