@@ -45,7 +45,7 @@ uts-machine-learning-241011402689/
 
 ## 🛠️ Arsitektur & Implementasi Fungsi Mandiri (*From Scratch*)
 
-Sesuai standar yang dicontohkan dosen pada materi perkuliahan (`regression_1.ipynb` dan `classification_1.ipynb`), seluruh modul komputasi inti diimplementasikan secara mandiri menggunakan operasi vektor dan matriks NumPy:
+Seluruh modul komputasi inti diimplementasikan menggunakan operasi vektor dan matriks NumPy:
 
 ### 1. Fungsi Partisi Data (`train_test_split`)
 Fungsi membagi dataset menjadi subset pelatihan (*training*) dan pengujian (*testing*) menggunakan generator bilangan acak berbasis *seed* deterministik (`random_state`).
