@@ -77,7 +77,10 @@ def train_test_split(X, y, test_size=0.25, random_state=None):
 
 ### 2. Kelas `LinearRegression` (Solusi Analitik: *Normal Equation*)
 Menyelesaikan estimasi parameter kuadrat terkecil (*ordinary least squares*) secara analitik dalam satu langkah aljabar matriks tertutup (*closed-form solution*):
-$$\boldsymbol{\beta} = (\mathbf{X}_b^T \mathbf{X}_b)^{-1} \mathbf{X}_b^T \mathbf{y}$$
+
+$$
+\boldsymbol{\beta} = (\mathbf{X}_b^T \mathbf{X}_b)^{-1} \mathbf{X}_b^T \mathbf{y}
+$$
 
 ```python
 class LinearRegression:
@@ -141,7 +144,10 @@ def r2_score(y_true, y_pred):
 
 ### 4. Kelas `LinearRegressionGD` (Solusi Iteratif: *Gradient Descent*)
 Memperbarui vektor bobot $\boldsymbol{\beta}$ secara iteratif dengan menuruni kurva gradien fungsi loss MSE:
-$$\nabla_{\boldsymbol{\beta}} L = \frac{2}{n} \mathbf{X}_b^T (\mathbf{X}_b \boldsymbol{\beta} - \mathbf{y}) \quad \longrightarrow \quad \boldsymbol{\beta} \leftarrow \boldsymbol{\beta} - \alpha \nabla_{\boldsymbol{\beta}} L$$
+
+$$
+\nabla_{\boldsymbol{\beta}} L = \frac{2}{n} \mathbf{X}_b^T (\mathbf{X}_b \boldsymbol{\beta} - \mathbf{y}) \quad \longrightarrow \quad \boldsymbol{\beta} \leftarrow \boldsymbol{\beta} - \alpha \nabla_{\boldsymbol{\beta}} L
+$$
 
 ```python
 class LinearRegressionGD:
@@ -184,7 +190,10 @@ class LinearRegressionGD:
 
 ### 5. Kelas `LogisticRegression` (Klasifikasi Sigmoid & *Log Loss*)
 Memetakan kombinasi linear ke probabilitas biner melalui fungsi sigmoid $\sigma(z) = \frac{1}{1 + e^{-z}}$, dengan fungsi objektif *Cross-Entropy* (*Log Loss*):
-$$L = -\frac{1}{n} \sum_{i=1}^n \left[ y_i \ln(p_i) + (1 - y_i) \ln(1 - p_i) \right]$$
+
+$$
+L = -\frac{1}{n} \sum_{i=1}^n \left[ y_i \ln(p_i) + (1 - y_i) \ln(1 - p_i) \right]
+$$
 
 ```python
 class LogisticRegression:
@@ -308,7 +317,10 @@ Kasus: Pemodelan pengaruh alokasi anggaran **Biaya Iklan** terhadap volume **Pen
   * **Intercept ($b$):** `27.5570`
   * **Slope / Koefisien ($m$):** `9.1762`
 * **Persamaan Garis Regresi Terbentuk:**
-  $$\hat{y} = 27.5570 + 9.1762 \cdot \text{BiayaIklan}$$
+
+  $$
+  \hat{y} = 27.5570 + 9.1762 \cdot \text{BiayaIklan}
+  $$
 * **Interpretasi Akademis & Bisnis:**
   1. **Intercept ($b = 27.5570$ juta Rp):** Merupakan konstanta estimasi penjualan dasar bulanan apabila perusahaan sama sekali tidak mengeluarkan biaya promosi iklan ($X = 0$). Karena titik nol berada sedikit di luar rentang data latih riil (0.8–9.9 juta Rp), angka ini diartikan sebagai acuan dasar omzet alamiah toko (*organic baseline sales*).
   2. **Slope ($m = 9.1762$):** Koefisien regresi bernilai positif, menandakan korelasi searah yang kuat. Secara kuantitatif, **setiap tambahan alokasi biaya iklan sebesar 1 juta Rp diproyeksikan akan meningkatkan omzet penjualan bulanan rata-rata sebesar 9,18 juta Rp**. Rasio pengembalian ini mengindikasikan efektivitas pemasaran yang sangat tinggi (*Return on Ad Spend* / ROAS positif).
@@ -392,8 +404,14 @@ Kasus: Pembangunan sistem penyaring email sampah (*spam filter*) biner berdasark
   * **Koefisien $m_1$ (`JumlahLink`):** `1.0106`
   * **Koefisien $m_2$ (`KataPromo`):** `1.0251`
 * **Formulasi Persamaan Peluang Sigmoid:**
-  $$z = -12.5226 + 1.0106 \cdot \text{JumlahLink} + 1.0251 \cdot \text{KataPromo}$$
-  $$P(\text{Spam} \mid X) = \sigma(z) = \frac{1}{1 + e^{-(-12.5226 + 1.0106 \cdot \text{JumlahLink} + 1.0251 \cdot \text{KataPromo})}}$$
+
+  $$
+  z = -12.5226 + 1.0106 \cdot \text{JumlahLink} + 1.0251 \cdot \text{KataPromo}
+  $$
+
+  $$
+  P(\text{Spam} \mid X) = \sigma(z) = \frac{1}{1 + e^{-(-12.5226 + 1.0106 \cdot \text{JumlahLink} + 1.0251 \cdot \text{KataPromo})}}
+  $$
 * **Evaluasi Dinamika Loss:**
   * **Initial Log Loss:** `0.6931` (setara $-\ln(0.5)$, yaitu tebakan acak murni pada probabilitas seimbang).
   * **Final Log Loss:** `0.1657` (turun signifikan dan mendatar stabil).
@@ -405,7 +423,9 @@ Kasus: Pembangunan sistem penyaring email sampah (*spam filter*) biner berdasark
 * **Instruksi Soal:** Implementasikan fungsi metrik klasifikasi mandiri (`accuracy_score`, `confusion_matrix`, `precision_score`, `recall_score`, `f1_score`). Evaluasi pada 15 data uji pada ambang batas default 0.5, serta jelaskan makna FP dan FN dalam sistem filter spam beserta tingkat kekritisan risikonya.
 * **Confusion Matrix Data Testing (15 Email Uji):**
 
-$$\text{Confusion Matrix} = \begin{bmatrix} TN = 4 & FP = 0 \\ FN = 4 & TP = 7 \end{bmatrix}$$
+$$
+\text{Confusion Matrix} = \begin{bmatrix} TN = 4 & FP = 0 \\ FN = 4 & TP = 7 \end{bmatrix}
+$$
 
 * **Tabel Metrik Evaluasi Testing:**
 
@@ -427,10 +447,15 @@ $$\text{Confusion Matrix} = \begin{bmatrix} TN = 4 & FP = 0 \\ FN = 4 & TP = 7 \
 * **Instruksi Soal:** Turunkan persamaan garis *decision boundary* analitik saat probabilitas $P(\text{Spam}) = 0.5$. Buat visualisasi kontur probabilitas (`contourf`), garis batas keputusan, sebaran data testing, serta tandai sampel yang mengalami salah klasifikasi.
 * **Penurunan Matematis Persamaan Garis:**
   Garis batas keputusan tercapai tepat ketika probabilitas bernilai 0.5, yaitu saat argumen logit $z = 0$:
-  $$b + m_1 x_1 + m_2 x_2 = 0$$
-  $$-12.5226 + 1.0106 \cdot \text{JumlahLink} + 1.0251 \cdot \text{KataPromo} = 0$$
-  $$\text{KataPromo} = -\frac{-12.5226 + 1.0106 \cdot \text{JumlahLink}}{1.0251}$$
-  $$\mathbf{\text{KataPromo} = 12.2164 - 0.9859 \cdot \text{JumlahLink}}$$
+
+  $$
+  \begin{aligned}
+  b + m_1 x_1 + m_2 x_2 &= 0 \\
+  -12.5226 + 1.0106 \cdot \text{JumlahLink} + 1.0251 \cdot \text{KataPromo} &= 0 \\
+  \text{KataPromo} &= -\frac{-12.5226 + 1.0106 \cdot \text{JumlahLink}}{1.0251} \\
+  \mathbf{\text{KataPromo}} &= \mathbf{12.2164 - 0.9859 \cdot \text{JumlahLink}}
+  \end{aligned}
+  $$
 * **Identifikasi Sampel Uji yang Salah Diklasifikasikan:**
   Terdapat **4 titik data uji yang salah diprediksi**, dan seluruhnya bertipe **False Negative (FN)**:
 
